@@ -5,8 +5,8 @@ USER root
 # 安装中文字体、Chromium 与常见 Puppeteer 依赖
 RUN apk add --no-cache \
     fontconfig \
-    noto-fonts-cjk \
-    noto-fonts-emoji \
+    font-noto-cjk \
+    font-noto-emoji \
     ttf-freefont \
     ttf-liberation \
     wqy-zenhei \
@@ -16,6 +16,7 @@ RUN apk add --no-cache \
     nss \
     glib \
     freetype \
+    freetype-dev \
     harfbuzz \
     udev
 
@@ -25,7 +26,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 
 # 刷新字体缓存（即使失败也不影响构建）
 RUN fc-cache -f -v || true && \
-    fc-list | grep -Ei "noto|cjk|emoji" || true
+    fc-list | grep -Ei "noto|wqy|emoji" || true
 
 # 安装自定义 n8n 节点（持久位置）
 RUN mkdir -p /opt/n8n-custom-nodes && \
